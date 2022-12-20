@@ -87,8 +87,8 @@ var finances = [
     ['Feb-2017', 671099]
 ];
 //total number of months in the array
-
 //The net total amount of profit/loss over the entire period
+
 //The average of the changes in Profit/Losses over the entire period
 // - You will need to track what the total change in profits are from month to month and then find the average.
 // - (Total/Number of months)
@@ -99,19 +99,31 @@ var months = finances.length;
 var total = 0;
 var change = 0;
 var average;
-var analysis
 var net = 0;
 var netArray = [];
 var netChangeSum = 0;
 var least = ['', 0];
 var greatest = ['', 0];
 
-const netTotal = () => {
+const analysis = () => {
     for (i = 0; i < finances.length; i++) {
-        console.log(finances[i][1], "fiances[i][1]")
+        // console.log(finances[i][1], "fiances[i][1]")
         total += finances[i][1]
-        console.log(total, "total")
+        // console.log(total, "total")
+        change = finances[i][1] - net;
+        net = finances[i][1];
+        netArray.push(change);
     }
+
+    // console.log(netArray, "netArray");
+
+    for (i = 0; i < netArray.length; i++) {
+        netChangeSum += netArray[i];
+    }
+    average = Math.round(netChangeSum / months);
+    console.log(average, "average");
+
+
     analysisReport();
 }
 
@@ -121,7 +133,7 @@ const analysisReport = () => {
 ----------------------------
 Total Months: ${months}
 Total: $${total}
-Average  Change: ${average}
+Average Change: ${average}
 Greatest Increase in Profits: ${greatest[0]} $${greatest[1]}
 Greatest Decrease in Profits: ${least[0]} $${least[1]}`
 
@@ -129,5 +141,5 @@ Greatest Decrease in Profits: ${least[0]} $${least[1]}`
 }
 
 
-netTotal();
+analysis();
 
