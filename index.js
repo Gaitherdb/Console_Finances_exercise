@@ -104,24 +104,37 @@ var netArray = [];
 var netChangeSum = 0;
 var least = ['', 0];
 var greatest = ['', 0];
+var greatestChange = 0;
+var leastChange = 0;
 
 const analysis = () => {
     for (i = 0; i < finances.length; i++) {
         // console.log(finances[i][1], "fiances[i][1]")
-        total += finances[i][1]
+        total += finances[i][1];
         // console.log(total, "total")
         change = finances[i][1] - net;
         net = finances[i][1];
         netArray.push(change);
+
+        //if the change is bigger than the previous biggest change, then report the month and the profits for that month 
+        //(We are not reporting the change, just the month with the greatest change)
+        if (change > greatestChange) {
+            greatestChange = change
+            greatest = [finances[i][0], finances[i][1]];
+        }
+
+        if (change < leastChange) {
+            leastChange = change
+            least = [finances[i][0], finances[i][1]];
+        }
     }
 
     // console.log(netArray, "netArray");
-
     for (i = 0; i < netArray.length; i++) {
         netChangeSum += netArray[i];
     }
     average = Math.round(netChangeSum / months);
-    console.log(average, "average");
+    // console.log(average, "average");
 
 
     analysisReport();
@@ -133,7 +146,7 @@ const analysisReport = () => {
 ----------------------------
 Total Months: ${months}
 Total: $${total}
-Average Change: ${average}
+Average Change: $${average}
 Greatest Increase in Profits: ${greatest[0]} $${greatest[1]}
 Greatest Decrease in Profits: ${least[0]} $${least[1]}`
 
